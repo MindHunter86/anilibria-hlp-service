@@ -20,7 +20,7 @@ var version = "devel" // -ldflags="-X 'main.version=X.X.X'"
 
 func main() {
 	go func() {
-		log.Println(http.ListenAndServe("localhost:6063", nil))
+		log.Println(http.ListenAndServe("localhost:6068", nil))
 	}()
 
 	// logger
@@ -60,7 +60,6 @@ func main() {
 			Aliases: []string{"q"},
 			Usage:   "Flag is equivalent to --log-level=quite",
 		},
-
 		// http client settings
 		&cli.BoolFlag{
 			Name:  "http-client-insecure",
@@ -69,7 +68,7 @@ func main() {
 		&cli.DurationFlag{
 			Name:  "http-client-timeout",
 			Usage: "Internal HTTP client connection `TIMEOUT` (format: 1000ms, 1s)",
-			Value: 500 * time.Millisecond,
+			Value: 3 * time.Second,
 		},
 		&cli.DurationFlag{
 			Name:  "http-tcp-timeout",
@@ -89,7 +88,7 @@ func main() {
 		&cli.DurationFlag{
 			Name:  "http-keepalive-timeout",
 			Usage: "",
-			Value: 600 * time.Second,
+			Value: 300 * time.Second,
 		},
 		&cli.IntFlag{
 			Name:  "http-max-idle-conns",
@@ -99,6 +98,29 @@ func main() {
 		&cli.BoolFlag{
 			Name:  "http-debug",
 			Usage: "",
+		},
+
+		// anilibria settings
+		&cli.StringFlag{
+			Name:  "anilibria-baseurl",
+			Usage: "",
+			Value: "https://www.anilibria.tv",
+		},
+		&cli.StringFlag{
+			Name:  "anilibria-api-baseurl",
+			Usage: "",
+			Value: "https://api.anilibria.tv/v2",
+		},
+
+		// ip ban settigns
+		&cli.BoolFlag{
+			Name:  "ip-ban-disable",
+			Usage: "",
+		},
+		&cli.DurationFlag{
+			Name:  "ip-ban-time",
+			Usage: "",
+			Value: 60 * time.Minute,
 		},
 
 		// ...
